@@ -1,0 +1,33 @@
+
+persist.sys.usb.config=mtp,adb
+
+#NFC
+debug.nfc.fw_download=false
+debug.nfc.se=false
+
+rild.libpath=/system/lib/libril-icera.so
+ro.opengles.version = 196609
+wifi.interface=wlan0
+ap.interface=wlan0
+persist.tegra.nvmmlite = 1
+persist.wlan.ti.calibrated = 0
+ro.sf.override_null_lcd_density = 1
+persist.tegra.compositor=glcomposer
+ro.callvibrate.enable=true
+ro.com.google.clientidbase=android-nvidia
+ro.zygote.disable_gl_preload=true
+# Release name
+PRODUCT_RELEASE_NAME := s8515
+
+# Inherit some common CM stuff.
+$(call inherit-product, vendor/cm/config/common_full_phone.mk)
+
+# Inherit device configuration
+$(call inherit-product, device/nvidia/s8515/device_s8515.mk)
+
+## Device identifier. This must come after all inclusions
+PRODUCT_DEVICE := s8515
+PRODUCT_NAME := cm_s8515
+PRODUCT_BRAND := nvidia
+PRODUCT_MODEL := s8515
+PRODUCT_MANUFACTURER := nvidia
