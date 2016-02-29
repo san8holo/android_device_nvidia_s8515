@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 The CyanogenMod Project
+ * Copyright (C) 2014 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,37 +16,40 @@
 
 package org.cyanogenmod.hardware;
 
-import java.io.File;
 import org.cyanogenmod.hardware.util.FileUtils;
+import java.io.File;
 
 public class VibratorHW {
-
-    private static String NFORCE_PATH = 
-	"/sys/devices/platform/tegra14-i2c.4/i2c-4/4-0023/max77660-vibrator/vibrator_enable";
+    private static String LEVEL_PATH = "/sys/class/timed_output/vibrator/vtg_level";
+    private static String MAX_PATH = "/sys/class/timed_output/vibrator/vtg_max";
+    private static String MIN_PATH = "/sys/class/timed_output/vibrator/vtg_min";
 
     public static boolean isSupported() {
-        File f = new File(NFORCE_PATH);
-        return f.exists();
+        return new File(LEVEL_PATH).exists();
     }
-
 
     public static int getMaxIntensity()  {
-        return 255;
+        return Integer.parseInt(FileUtils.readOneLine(MAX_PATH));
     }
+
     public static int getMinIntensity()  {
-        return 1;
+        return Integer.parseInt(FileUtils.readOneLine(MIN_PATH));
     }
+
     public static int getWarningThreshold()  {
-        return 200;
+        return -1;
     }
+
     public static int getCurIntensity()  {
-        return Integer.parseInt(FileUtils.readOneLine(NFORCE_PATH));
+        return Integer.parseInt(FileUtils.readOneLine(LEVEL_PATH));
     }
+
     public static int getDefaultIntensity()  {
-        return 150;
+        return getMaxIntensity();
     }
+
     public static boolean setIntensity(int intensity)  {
-        return FileUtils.writeLine(NFORCE_PATH, String.valueOf(intensity));
+        return FileUtils.writeLine(LEVEL_PATH, String.valueOf(intensity));
     }
 }
 
